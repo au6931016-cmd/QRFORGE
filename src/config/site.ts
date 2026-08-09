@@ -1,6 +1,6 @@
 export const siteConfig = {
-  name: "QRForge",
-  shortName: "QRForge",
+  name: "ScanGrid",
+  shortName: "ScanGrid",
   tagline: "Free QR Code Generator",
   description:
     "Create, customize, download, and print QR codes in seconds. Free QR code generator for URLs, Wi-Fi, contact cards, events, and more — no signup required.",
@@ -9,19 +9,19 @@ export const siteConfig = {
   ogImage: "/opengraph-image",
   locale: "en_US",
   social: {
-    twitter: "https://twitter.com/qrforge",
-    facebook: "https://facebook.com/qrforge",
-    linkedin: "https://linkedin.com/company/qrforge",
-    github: "https://github.com/qrforge",
+    twitter: "https://twitter.com/scangrid",
+    facebook: "https://facebook.com/scangrid",
+    linkedin: "https://linkedin.com/company/scangrid",
+    github: "https://github.com/scangrid",
   },
-  contactEmail: "hello@qrforge.example",
-  supportEmail: "support@qrforge.example",
-  legalEmail: "legal@qrforge.example",
+  contactEmail: "tahirabdullah528@gmail.com",
+  supportEmail: "tahirabdullah528@gmail.com",
+  legalEmail: "tahirabdullah528@gmail.com",
   seo: {
-    defaultTitle: "QRForge — Free QR Code Generator",
+    defaultTitle: "ScanGrid — Free QR Code Generator",
     defaultDescription:
       "Generate free, high-quality QR codes for URLs, Wi-Fi, contact cards, events, and more. Customize colors, add a logo, and download in PNG or SVG — instantly, in your browser.",
-    titleTemplate: "%s | QRForge",
+    titleTemplate: "%s | ScanGrid",
     keywords: [
       "qr code generator",
       "free qr code",

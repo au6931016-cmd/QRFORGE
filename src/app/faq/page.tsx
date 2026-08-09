@@ -6,10 +6,11 @@ import { Container, Section } from "@/components/ui/Container";
 import { globalFaq } from "@/data/faq";
 import { faqJsonLd } from "@/lib/seo/json-ld";
 import { buildMetadata } from "@/lib/seo/metadata";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = buildMetadata({
   title: "Frequently Asked Questions",
-  description: "Answers to common questions about creating, customizing, and using QR codes on QRForge.",
+  description: `Answers to common questions about creating, customizing, and using QR codes on ${siteConfig.name}.`,
   path: "/faq",
 });
 

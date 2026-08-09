@@ -152,7 +152,7 @@ export default function HomePage() {
 
       <Section className="border-t border-border bg-surface/50">
         <Container>
-          <h2 className="text-center text-2xl font-semibold text-text">Why QRForge</h2>
+          <h2 className="text-center text-2xl font-semibold text-text">Why {siteConfig.name}</h2>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {benefits.map((benefit) => (
               <div
@@ -210,7 +210,7 @@ export default function HomePage() {
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <Badge tone="violet">Coming soon</Badge>
-              <h2 className="mt-3 text-2xl font-semibold text-text">What&apos;s next for QRForge</h2>
+              <h2 className="mt-3 text-2xl font-semibold text-text">What&apos;s next for {siteConfig.name}</h2>
               <p className="mt-2 max-w-xl text-sm text-text-muted">
                 Today&apos;s generator is free and fully static. Here&apos;s what we&apos;re building
                 next — none of it is live yet, and we&apos;ll only call a feature &ldquo;dynamic&rdquo;

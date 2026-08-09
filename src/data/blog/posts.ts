@@ -6,7 +6,7 @@ export const blogPosts: BlogPost[] = [
     title: "How to Create a QR Code (Step by Step)",
     description:
       "A complete walkthrough for creating your first QR code — choosing a type, customizing it, and making sure it actually scans.",
-    author: "QRForge Team",
+    author: "ScanGrid Team",
     publishedDate: "2026-01-12",
     updatedDate: "2026-01-12",
     category: "Guides",
@@ -50,7 +50,7 @@ export const blogPosts: BlogPost[] = [
     title: "How QR Codes Work, Explained Simply",
     description:
       "A plain-English look at what's actually happening inside a QR code — modules, error correction, and why they still scan when partly damaged.",
-    author: "QRForge Team",
+    author: "ScanGrid Team",
     publishedDate: "2026-01-15",
     updatedDate: "2026-01-15",
     category: "Education",
@@ -88,7 +88,7 @@ export const blogPosts: BlogPost[] = [
     title: "How to Create a Wi-Fi QR Code for Your Home or Business",
     description:
       "Skip typing passwords for guests. Here's how Wi-Fi QR codes work and how to set one up correctly the first time.",
-    author: "QRForge Team",
+    author: "ScanGrid Team",
     publishedDate: "2026-01-20",
     updatedDate: "2026-01-20",
     category: "Guides",
@@ -131,7 +131,7 @@ export const blogPosts: BlogPost[] = [
     title: "How to Create a QR Code Restaurant Menu",
     description:
       "A practical guide to putting your menu online and linking it with a QR code — including layout and print tips.",
-    author: "QRForge Team",
+    author: "ScanGrid Team",
     publishedDate: "2026-01-24",
     updatedDate: "2026-01-24",
     category: "Business",
@@ -174,7 +174,7 @@ export const blogPosts: BlogPost[] = [
     title: "Static vs. Dynamic QR Codes: What's the Difference?",
     description:
       "Understand the real difference between static and dynamic QR codes before you choose — and why most use cases don't need dynamic.",
-    author: "QRForge Team",
+    author: "ScanGrid Team",
     publishedDate: "2026-01-28",
     updatedDate: "2026-01-28",
     category: "Education",
@@ -212,7 +212,7 @@ export const blogPosts: BlogPost[] = [
     title: "How to Print a QR Code So It Actually Scans",
     description:
       "Sizing, contrast, materials, and placement — the practical details that determine whether a printed QR code works.",
-    author: "QRForge Team",
+    author: "ScanGrid Team",
     publishedDate: "2026-02-02",
     updatedDate: "2026-02-02",
     category: "Guides",
@@ -254,7 +254,7 @@ export const blogPosts: BlogPost[] = [
     title: "How to Test a QR Code Before You Publish It",
     description:
       "A short pre-flight checklist for confirming a QR code works — before it goes on packaging, signage, or print.",
-    author: "QRForge Team",
+    author: "ScanGrid Team",
     publishedDate: "2026-02-06",
     updatedDate: "2026-02-06",
     category: "Guides",
@@ -289,7 +289,7 @@ export const blogPosts: BlogPost[] = [
     title: "How to Create a QR Code for a Business Card",
     description:
       "Turn a paper business card into a one-scan digital contact save with a vCard QR code.",
-    author: "QRForge Team",
+    author: "ScanGrid Team",
     publishedDate: "2026-02-10",
     updatedDate: "2026-02-10",
     category: "Business",
@@ -323,7 +323,7 @@ export const blogPosts: BlogPost[] = [
     title: "How to Use QR Codes for Marketing (Without Annoying Anyone)",
     description:
       "Practical placement ideas and mistakes to avoid when adding QR codes to campaigns, packaging, and print ads.",
-    author: "QRForge Team",
+    author: "ScanGrid Team",
     publishedDate: "2026-02-14",
     updatedDate: "2026-02-14",
     category: "Business",
@@ -366,7 +366,7 @@ export const blogPosts: BlogPost[] = [
     title: "Are QR Codes Safe? What to Know Before You Scan",
     description:
       "QR codes themselves aren't dangerous, but scanning one blindly can be. Here's what's actually at risk and how to scan safely.",
-    author: "QRForge Team",
+    author: "ScanGrid Team",
     publishedDate: "2026-02-18",
     updatedDate: "2026-02-18",
     category: "Security",
