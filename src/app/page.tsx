@@ -18,10 +18,12 @@ import { QRCodeGenerator } from "@/components/qr/QRCodeGenerator";
 import { Badge } from "@/components/ui/Badge";
 import { Container, Section } from "@/components/ui/Container";
 import { FaqAccordion } from "@/components/faq/FaqAccordion";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getRecentPosts } from "@/data/blog/posts";
 import { globalFaq } from "@/data/faq";
 import { siteConfig } from "@/config/site";
 import { buildMetadata } from "@/lib/seo/metadata";
+import { faqJsonLd, softwareApplicationJsonLd } from "@/lib/seo/json-ld";
 import { cn } from "@/lib/utils/cn";
 
 export const metadata: Metadata = buildMetadata({
@@ -119,6 +121,8 @@ export default function HomePage() {
 
   return (
     <>
+      <JsonLd data={softwareApplicationJsonLd()} />
+      <JsonLd data={faqJsonLd(globalFaq.slice(0, 5))} />
       <Section className="hero-mesh pb-0 pt-10 sm:pt-14">
         <Container>
           <div className="mx-auto max-w-2xl text-center">

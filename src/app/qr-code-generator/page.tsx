@@ -3,10 +3,12 @@ import Link from "next/link";
 import { QRCodeGenerator } from "@/components/qr/QRCodeGenerator";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { Breadcrumbs } from "@/components/seo/Breadcrumbs";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Container, Section } from "@/components/ui/Container";
 import { qrTypeMeta } from "@/data/qr-types/meta";
 import { QR_CODE_TYPES } from "@/types/qr";
 import { buildMetadata } from "@/lib/seo/metadata";
+import { softwareApplicationJsonLd } from "@/lib/seo/json-ld";
 
 export const metadata: Metadata = buildMetadata({
   title: "Free QR Code Generator",
@@ -18,6 +20,7 @@ export const metadata: Metadata = buildMetadata({
 export default function QRCodeGeneratorPage() {
   return (
     <>
+      <JsonLd data={softwareApplicationJsonLd()} />
       <Section className="pb-0 pt-8 sm:pt-10">
         <Container>
           <Breadcrumbs

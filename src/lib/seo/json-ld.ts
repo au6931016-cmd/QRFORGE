@@ -25,6 +25,27 @@ export function websiteJsonLd() {
   };
 }
 
+export function softwareApplicationJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: `${siteConfig.name} QR Code Generator`,
+    url: new URL("/qr-code-generator", siteConfig.url).toString(),
+    applicationCategory: "UtilityApplication",
+    operatingSystem: "Any (browser-based)",
+    description: siteConfig.seo.defaultDescription,
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    creator: {
+      "@type": "Organization",
+      name: siteConfig.name,
+    },
+  };
+}
+
 export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
   return {
     "@context": "https://schema.org",
