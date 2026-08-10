@@ -1,13 +1,14 @@
 import { siteConfig } from "@/config/site";
 
 export function organizationJsonLd() {
+  const sameAs = Object.values(siteConfig.social);
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: siteConfig.name,
     url: siteConfig.url,
     logo: new URL(siteConfig.logo, siteConfig.url).toString(),
-    sameAs: Object.values(siteConfig.social),
+    ...(sameAs.length > 0 ? { sameAs } : {}),
   };
 }
 

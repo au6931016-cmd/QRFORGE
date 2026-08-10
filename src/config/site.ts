@@ -8,12 +8,7 @@ export const siteConfig = {
   logo: "/images/logo.svg",
   ogImage: "/opengraph-image",
   locale: "en_US",
-  social: {
-    twitter: "https://twitter.com/scangrid",
-    facebook: "https://facebook.com/scangrid",
-    linkedin: "https://linkedin.com/company/scangrid",
-    github: "https://github.com/scangrid",
-  },
+  social: {},
   contactEmail: "tahirabdullah528@gmail.com",
   supportEmail: "tahirabdullah528@gmail.com",
   legalEmail: "tahirabdullah528@gmail.com",
