@@ -17,7 +17,7 @@ interface DownloadControlsProps {
   type: QRCodeType;
   filenameBase: string;
   onPrint: () => void;
-  onReset: () => void;
+  onReset?: () => void;
 }
 
 const SIZE_OPTIONS: { label: string; value: QRSizePreset }[] = [
@@ -149,9 +149,11 @@ export function DownloadControls({
             Share
           </Button>
         )}
-        <Button variant="ghost" onClick={onReset}>
-          Reset
-        </Button>
+        {onReset && (
+          <Button variant="ghost" onClick={onReset}>
+            Reset
+          </Button>
+        )}
       </div>
 
       <p className="text-xs text-text-muted">

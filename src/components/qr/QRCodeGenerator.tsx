@@ -8,6 +8,7 @@ import { PrintView } from "@/components/qr/PrintView";
 import { QRPreview } from "@/components/qr/QRPreview";
 import { QRTypeSelector } from "@/components/qr/QRTypeSelector";
 import { SafetyWarnings } from "@/components/qr/SafetyWarnings";
+import { SaveToAccountButton } from "@/components/qr/pro/SaveToAccountButton";
 import { Card, CardContent } from "@/components/ui/Card";
 import { qrFieldConfig } from "@/data/qr-types/fields";
 import { qrTypeMeta } from "@/data/qr-types/meta";
@@ -176,6 +177,14 @@ export function QRCodeGenerator({ lockedType, className }: QRCodeGeneratorProps)
                   filenameBase={filenameBase}
                   onPrint={handlePrint}
                   onReset={handleReset}
+                />
+              </div>
+              <div className="mt-4 border-t border-border pt-4">
+                <SaveToAccountButton
+                  type={type}
+                  data={currentData}
+                  customization={customization}
+                  disabled={!payload}
                 />
               </div>
             </CardContent>
