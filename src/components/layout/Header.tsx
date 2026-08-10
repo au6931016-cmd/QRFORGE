@@ -1,16 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Logo } from "@/components/layout/Logo";
 import { Button } from "@/components/ui/Button";
+import { useAuth } from "@/components/auth/AuthContext";
 import { mainNav } from "@/data/navigation";
 import { cn } from "@/lib/utils/cn";
 
 export function Header() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { user, signOut } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  async function handleSignOut() {
+    await signOut();
+    setMenuOpen(false);
+    router.push("/");
+    router.refresh();
+  }
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -54,7 +64,20 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden items-center gap-3 md:flex">
+          {user ? (
+            <button
+              type="button"
+              onClick={handleSignOut}
+              className="text-sm font-medium text-text-muted hover:text-text"
+            >
+              Sign out
+            </button>
+          ) : (
+            <Link href="/login" className="text-sm font-medium text-text-muted hover:text-text">
+              Log in
+            </Link>
+          )}
           <Link
             href="/qr-code-generator"
             className="inline-flex h-9 items-center justify-center gap-1.5 rounded-md bg-gradient-to-r from-primary to-accent-violet px-4 text-sm font-medium text-primary-foreground shadow-sm shadow-primary/25 transition-all hover:shadow-md hover:shadow-primary/30 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
@@ -113,6 +136,23 @@ export function Header() {
           <Link href="/qr-code-generator" onClick={() => setMenuOpen(false)} className="mt-4 block">
             <Button className="w-full">Create QR Code</Button>
           </Link>
+          {user ? (
+            <button
+              type="button"
+              onClick={handleSignOut}
+              className="mt-3 block w-full rounded-md px-3 py-3 text-left text-base font-medium text-text hover:bg-surface"
+            >
+              Sign out
+            </button>
+          ) : (
+            <Link
+              href="/login"
+              onClick={() => setMenuOpen(false)}
+              className="mt-3 block rounded-md px-3 py-3 text-base font-medium text-text hover:bg-surface"
+            >
+              Log in
+            </Link>
+          )}
         </nav>
       )}
     </header>

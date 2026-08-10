@@ -3,9 +3,11 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { AuthProvider } from "@/components/auth/AuthContext";
 import { ConsentProvider } from "@/components/privacy/ConsentContext";
 import { ConsentBanner } from "@/components/privacy/ConsentBanner";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { getSession } from "@/lib/auth/get-session";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/json-ld";
 import { siteConfig } from "@/config/site";
 
@@ -45,7 +47,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const { user, profile } = await getSession();
+
   return (
     <html lang="en" className={`${inter.variable} h-full`}>
       <body className="flex min-h-full flex-col font-sans antialiased">
@@ -57,20 +61,22 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             this site.
           </div>
         </noscript>
-        <ConsentProvider>
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
-          >
-            Skip to content
-          </a>
-          <Header />
-          <main id="main-content" className="flex-1">
-            {children}
-          </main>
-          <Footer />
-          <ConsentBanner />
-        </ConsentProvider>
+        <AuthProvider initialUser={user} initialProfile={profile}>
+          <ConsentProvider>
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+            >
+              Skip to content
+            </a>
+            <Header />
+            <main id="main-content" className="flex-1">
+              {children}
+            </main>
+            <Footer />
+            <ConsentBanner />
+          </ConsentProvider>
+        </AuthProvider>
       </body>
     </html>
   );
