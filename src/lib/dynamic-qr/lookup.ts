@@ -1,18 +1,35 @@
+import { createAdminClient } from "@/lib/supabase/admin";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
+
 /**
- * Placeholder abstraction for the future dynamic QR system described in the
- * architecture doc. `/r/[shortCode]` is reserved as the redirect namespace,
- * but no backend/database is wired up yet — every lookup returns null.
- *
- * Replace this implementation once a secure backend exists. Callers should
- * not need to change: they already treat a null result as "not found."
+ * Resolves a dynamic QR code's short code to its current destination.
+ * Runs with the service-role client since scanners have no logged-in
+ * session — RLS on qr_codes has no policy for anonymous reads by design.
  */
 export interface DynamicDestination {
+  id: string;
   shortCode: string;
   destinationUrl: string;
   enabled: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- signature kept stable for the future backend-backed implementation
 export async function resolveShortCode(shortCode: string): Promise<DynamicDestination | null> {
-  return null;
+  if (!isSupabaseConfigured()) return null;
+
+  const supabase = createAdminClient();
+  const { data } = await supabase
+    .from("qr_codes")
+    .select("id, short_code, destination_url, enabled")
+    .eq("short_code", shortCode)
+    .eq("is_dynamic", true)
+    .maybeSingle();
+
+  if (!data || !data.destination_url) return null;
+
+  return {
+    id: data.id,
+    shortCode: data.short_code,
+    destinationUrl: data.destination_url,
+    enabled: data.enabled,
+  };
 }

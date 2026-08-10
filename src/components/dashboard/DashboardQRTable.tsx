@@ -21,9 +21,10 @@ import type { QRCodeRow } from "@/types/database";
 
 interface DashboardQRTableProps {
   qrCodes: QRCodeRow[];
+  scanCounts: Record<string, number>;
 }
 
-export function DashboardQRTable({ qrCodes: initialQrCodes }: DashboardQRTableProps) {
+export function DashboardQRTable({ qrCodes: initialQrCodes, scanCounts }: DashboardQRTableProps) {
   const router = useRouter();
   const { showToast } = useToast();
   const [qrCodes, setQrCodes] = useState(initialQrCodes);
@@ -53,6 +54,7 @@ export function DashboardQRTable({ qrCodes: initialQrCodes }: DashboardQRTablePr
           <TableRow>
             <TableHeaderCell>Name</TableHeaderCell>
             <TableHeaderCell>Type</TableHeaderCell>
+            <TableHeaderCell>Scans</TableHeaderCell>
             <TableHeaderCell>Created</TableHeaderCell>
             <TableHeaderCell className="text-right">Actions</TableHeaderCell>
           </TableRow>
@@ -75,6 +77,9 @@ export function DashboardQRTable({ qrCodes: initialQrCodes }: DashboardQRTablePr
                     Dynamic
                   </Badge>
                 )}
+              </TableCell>
+              <TableCell className="text-text-muted">
+                {qr.is_dynamic ? (scanCounts[qr.id] ?? 0) : "—"}
               </TableCell>
               <TableCell className="text-text-muted">
                 {new Date(qr.created_at).toLocaleDateString()}

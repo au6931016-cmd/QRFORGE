@@ -8,6 +8,7 @@ import { PrintView } from "@/components/qr/PrintView";
 import { QRPreview } from "@/components/qr/QRPreview";
 import { QRTypeSelector } from "@/components/qr/QRTypeSelector";
 import { SafetyWarnings } from "@/components/qr/SafetyWarnings";
+import { MakeDynamicToggle } from "@/components/qr/pro/MakeDynamicToggle";
 import { SaveToAccountButton } from "@/components/qr/pro/SaveToAccountButton";
 import { Card, CardContent } from "@/components/ui/Card";
 import { qrFieldConfig } from "@/data/qr-types/fields";
@@ -42,6 +43,7 @@ export function QRCodeGenerator({ lockedType, className }: QRCodeGeneratorProps)
   const [dataByType, setDataByType] = useState(defaultQRData);
   const [touched, setTouched] = useState<Set<string>>(new Set());
   const [customization, setCustomization] = useState<QRCustomization>(DEFAULT_CUSTOMIZATION);
+  const [dynamicShortCode, setDynamicShortCode] = useState<string | null>(null);
 
   const currentData = dataByType[type] as unknown as Record<string, unknown>;
 
@@ -58,7 +60,7 @@ export function QRCodeGenerator({ lockedType, className }: QRCodeGeneratorProps)
     return fieldErrors;
   }, [validation, touched]);
 
-  const payload = useMemo(() => {
+  const staticPayload = useMemo(() => {
     if (!hasRequiredFieldsFilled(type, currentData)) return "";
     try {
       return buildQRPayload(type, currentData as never);
@@ -66,6 +68,14 @@ export function QRCodeGenerator({ lockedType, className }: QRCodeGeneratorProps)
       return "";
     }
   }, [type, currentData]);
+
+  // Once "Make dynamic" creates a short link, the QR encodes that stable
+  // /r/[shortCode] URL instead of the raw destination — editing the
+  // destination later never requires reprinting the code.
+  const payload =
+    type === "url" && dynamicShortCode
+      ? `${siteConfig.url}/r/${dynamicShortCode}`
+      : staticPayload;
 
   const safetyWarnings = useMemo(
     () => (payload ? evaluateQRSafety(customization, 600) : []),
@@ -108,17 +118,21 @@ export function QRCodeGenerator({ lockedType, className }: QRCodeGeneratorProps)
       ...prev,
       [type]: { ...prev[type], [field]: value },
     }));
+    // The saved dynamic destination no longer matches edited form data.
+    setDynamicShortCode(null);
   }
 
   function handleTypeChange(nextType: QRCodeType) {
     setType(nextType);
     setTouched(new Set());
+    setDynamicShortCode(null);
   }
 
   function handleReset() {
     setDataByType(defaultQRData);
     setTouched(new Set());
     setCustomization(DEFAULT_CUSTOMIZATION);
+    setDynamicShortCode(null);
   }
 
   function handlePrint() {
@@ -179,14 +193,26 @@ export function QRCodeGenerator({ lockedType, className }: QRCodeGeneratorProps)
                   onReset={handleReset}
                 />
               </div>
-              <div className="mt-4 border-t border-border pt-4">
-                <SaveToAccountButton
-                  type={type}
-                  data={currentData}
-                  customization={customization}
-                  disabled={!payload}
-                />
-              </div>
+              {!dynamicShortCode && (
+                <div className="mt-4 border-t border-border pt-4">
+                  <SaveToAccountButton
+                    type={type}
+                    data={currentData}
+                    customization={customization}
+                    disabled={!staticPayload}
+                  />
+                </div>
+              )}
+              {type === "url" && (
+                <div className="mt-4 border-t border-border pt-4">
+                  <MakeDynamicToggle
+                    data={currentData}
+                    customization={customization}
+                    disabled={!staticPayload || dynamicShortCode !== null}
+                    onDynamicCreated={setDynamicShortCode}
+                  />
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>

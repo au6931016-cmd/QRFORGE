@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { QRDetailView } from "@/components/dashboard/QRDetailView";
 import { createClient } from "@/lib/supabase/server";
+import { getScanStats } from "@/lib/dynamic-qr/get-scan-stats";
 import { buildMetadata } from "@/lib/seo/metadata";
 import type { QRCodeRow } from "@/types/database";
 
@@ -23,5 +24,7 @@ export default async function QRDetailPage(props: PageProps<"/dashboard/[id]">) 
   const { data: qrCode } = await supabase.from("qr_codes").select("*").eq("id", id).single();
   if (!qrCode) notFound();
 
-  return <QRDetailView qrCode={qrCode as QRCodeRow} />;
+  const scanStats = qrCode.is_dynamic ? await getScanStats(supabase, id) : null;
+
+  return <QRDetailView qrCode={qrCode as QRCodeRow} scanStats={scanStats} />;
 }

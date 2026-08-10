@@ -26,6 +26,18 @@ export default async function DashboardPage() {
     .select("*")
     .order("created_at", { ascending: false });
 
+  const dynamicIds = (qrCodes ?? []).filter((qr) => qr.is_dynamic).map((qr) => qr.id);
+  const scanCounts: Record<string, number> = {};
+  if (dynamicIds.length > 0) {
+    const { data: scans } = await supabase
+      .from("qr_scans")
+      .select("qr_code_id")
+      .in("qr_code_id", dynamicIds);
+    for (const scan of scans ?? []) {
+      scanCounts[scan.qr_code_id] = (scanCounts[scan.qr_code_id] ?? 0) + 1;
+    }
+  }
+
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-4">
@@ -37,7 +49,7 @@ export default async function DashboardPage() {
 
       {qrCodes && qrCodes.length > 0 ? (
         <div className="mt-6">
-          <DashboardQRTable qrCodes={qrCodes as QRCodeRow[]} />
+          <DashboardQRTable qrCodes={qrCodes as QRCodeRow[]} scanCounts={scanCounts} />
         </div>
       ) : (
         <p className="mt-6 text-sm text-text-muted">

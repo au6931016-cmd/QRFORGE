@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { after } from "next/server";
 import { resolveShortCode } from "@/lib/dynamic-qr/lookup";
+import { logScan } from "@/lib/dynamic-qr/log-scan";
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
@@ -11,6 +14,10 @@ export default async function DynamicQRRedirectPage(props: PageProps<"/r/[shortC
   const destination = await resolveShortCode(shortCode);
 
   if (destination && destination.enabled) {
+    const headerList = await headers();
+    const referrer = headerList.get("referer");
+    const userAgent = headerList.get("user-agent");
+    after(() => logScan(destination.id, referrer, userAgent));
     redirect(destination.destinationUrl);
   }
 
