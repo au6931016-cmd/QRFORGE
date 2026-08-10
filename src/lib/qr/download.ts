@@ -2,7 +2,7 @@ import type { Options } from "qr-code-styling";
 import { composeFramedPng, composeFramedSvg, triggerBlobDownload } from "@/lib/qr/compose";
 import type { DownloadFormat, QRCustomization } from "@/types/qr";
 
-function slugifyFilename(name: string): string {
+export function slugifyFilename(name: string): string {
   return (
     name
       .trim()
