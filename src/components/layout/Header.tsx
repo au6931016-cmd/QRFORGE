@@ -61,36 +61,36 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Logo />
 
-        <nav aria-label="Main" className="hidden md:block">
-          <ul className="flex items-center gap-1">
-            {mainNav.map((item) => {
-              const active =
-                item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    aria-current={active ? "page" : undefined}
-                    className={cn(
-                      "relative rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-surface",
-                      active ? "text-primary" : "text-text-muted hover:text-text",
-                    )}
-                  >
-                    {item.label}
-                    {active && (
-                      <span
-                        aria-hidden="true"
-                        className="absolute inset-x-3 -bottom-[1px] h-0.5 rounded-full bg-gradient-to-r from-primary to-accent-violet"
-                      />
-                    )}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
+        <div className="hidden items-center gap-4 md:flex">
+          <nav aria-label="Main">
+            <ul className="flex items-center gap-1">
+              {mainNav.map((item) => {
+                const active =
+                  item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      aria-current={active ? "page" : undefined}
+                      className={cn(
+                        "relative rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-surface",
+                        active ? "text-primary" : "text-text-muted hover:text-text",
+                      )}
+                    >
+                      {item.label}
+                      {active && (
+                        <span
+                          aria-hidden="true"
+                          className="absolute inset-x-3 -bottom-[1px] h-0.5 rounded-full bg-gradient-to-r from-primary to-accent-violet"
+                        />
+                      )}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
           {user ? (
             <UserMenu />
           ) : (
@@ -98,13 +98,14 @@ export function Header() {
               Log in
             </Link>
           )}
-          <Link
-            href="/qr-code-generator"
-            className="inline-flex h-9 items-center justify-center gap-1.5 rounded-md bg-gradient-to-r from-primary to-accent-violet px-4 text-sm font-medium text-primary-foreground shadow-sm shadow-primary/25 transition-all hover:shadow-md hover:shadow-primary/30 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-          >
-            Create QR Code
-          </Link>
         </div>
+
+        <Link
+          href="/qr-code-generator"
+          className="hidden h-9 items-center justify-center gap-1.5 rounded-md bg-gradient-to-r from-primary to-accent-violet px-4 text-sm font-medium text-primary-foreground shadow-sm shadow-primary/25 transition-all hover:shadow-md hover:shadow-primary/30 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 md:inline-flex"
+        >
+          Create QR Code
+        </Link>
 
         <button
           type="button"
