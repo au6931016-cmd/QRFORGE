@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import type { User } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { isProfilePro } from "@/lib/auth/pro-plan";
 import type { Profile } from "@/types/database";
 
 interface AuthContextValue {
@@ -17,9 +18,7 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 function computeIsPro(profile: Profile | null): boolean {
-  if (!profile || profile.plan_tier !== "pro") return false;
-  if (!profile.plan_expires_at) return true;
-  return new Date(profile.plan_expires_at).getTime() > Date.now();
+  return isProfilePro(profile);
 }
 
 interface AuthProviderProps {

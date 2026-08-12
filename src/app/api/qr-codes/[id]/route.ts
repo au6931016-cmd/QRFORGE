@@ -20,6 +20,7 @@ export async function PATCH(request: Request, ctx: RouteContext<"/api/qr-codes/[
   if (typeof body.name === "string") updates.name = body.name.slice(0, 200);
   if (typeof body.enabled === "boolean") updates.enabled = body.enabled;
   if (typeof body.destinationUrl === "string") updates.destination_url = body.destinationUrl;
+  if (typeof body.isFavorite === "boolean") updates.is_favorite = body.isFavorite;
 
   if (Object.keys(updates).length === 0) {
     return NextResponse.json({ error: "No valid fields to update" }, { status: 400 });

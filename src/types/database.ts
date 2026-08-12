@@ -23,6 +23,7 @@ export interface QRCodeRow {
   form_data: Record<string, unknown>;
   customization: QRCustomization;
   is_dynamic: boolean;
+  is_favorite: boolean;
   short_code: string | null;
   destination_url: string | null;
   enabled: boolean;

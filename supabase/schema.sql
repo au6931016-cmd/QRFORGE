@@ -116,6 +116,11 @@ create trigger qr_codes_set_updated_at
   before update on public.qr_codes
   for each row execute procedure public.set_updated_at();
 
+-- 2026-08-12: favorite/starred flag for the account "Favorites" view
+alter table public.qr_codes add column if not exists is_favorite boolean not null default false;
+create index if not exists qr_codes_user_id_is_favorite_idx
+  on public.qr_codes (user_id, is_favorite);
+
 -- ===========================================================================
 -- qr_scans — scan event log for dynamic QR codes
 -- ===========================================================================

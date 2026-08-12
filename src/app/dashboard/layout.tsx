@@ -3,6 +3,7 @@ import { Container, Section } from "@/components/ui/Container";
 
 const DASHBOARD_NAV = [
   { href: "/dashboard", label: "My QR Codes" },
+  { href: "/dashboard/history", label: "History" },
   { href: "/dashboard/bulk", label: "Bulk Generate" },
   { href: "/account", label: "Account" },
 ];

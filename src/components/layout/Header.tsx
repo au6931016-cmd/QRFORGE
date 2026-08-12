@@ -4,15 +4,39 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Logo } from "@/components/layout/Logo";
+import { UserMenu, getDisplayName } from "@/components/layout/UserMenu";
 import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/Badge";
+import {
+  ClockHistoryIcon,
+  HelpCircleIcon,
+  LayoutGridIcon,
+  LogOutIcon,
+  MailIcon,
+  QrCodeIcon,
+  SettingsGearIcon,
+  StarIcon,
+  UserCircleIcon,
+} from "@/components/icons";
 import { useAuth } from "@/components/auth/AuthContext";
 import { mainNav } from "@/data/navigation";
 import { cn } from "@/lib/utils/cn";
 
+const mobileAccountLinks = [
+  { label: "Profile / Account", href: "/account", icon: UserCircleIcon },
+  { label: "Saved QR Codes", href: "/dashboard", icon: QrCodeIcon },
+  { label: "QR History", href: "/dashboard/history", icon: ClockHistoryIcon },
+  { label: "Favorites", href: "/dashboard?filter=favorites", icon: StarIcon },
+  { label: "Templates", href: "/qr-tools", icon: LayoutGridIcon },
+  { label: "Settings", href: "/account/settings", icon: SettingsGearIcon },
+  { label: "Help / FAQ", href: "/faq", icon: HelpCircleIcon },
+  { label: "Contact Support", href: "/contact", icon: MailIcon },
+];
+
 export function Header() {
   const pathname = usePathname();
   const router = useRouter();
-  const { user, signOut } = useAuth();
+  const { user, isPro, signOut } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
 
   async function handleSignOut() {
@@ -29,6 +53,8 @@ export function Header() {
       document.body.style.overflow = "";
     };
   }, [menuOpen]);
+
+  const displayName = getDisplayName(user);
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-bg/95 backdrop-blur supports-[backdrop-filter]:bg-bg/80">
@@ -66,13 +92,7 @@ export function Header() {
 
         <div className="hidden items-center gap-3 md:flex">
           {user ? (
-            <button
-              type="button"
-              onClick={handleSignOut}
-              className="text-sm font-medium text-text-muted hover:text-text"
-            >
-              Sign out
-            </button>
+            <UserMenu />
           ) : (
             <Link href="/login" className="text-sm font-medium text-text-muted hover:text-text">
               Log in
@@ -118,7 +138,7 @@ export function Header() {
         <nav
           id="mobile-nav"
           aria-label="Mobile"
-          className="border-t border-border bg-bg px-4 pb-6 pt-2 md:hidden"
+          className="max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-border bg-bg px-4 pb-6 pt-2 md:hidden"
         >
           <ul className="flex flex-col gap-1">
             {mainNav.map((item) => (
@@ -137,13 +157,42 @@ export function Header() {
             <Button className="w-full">Create QR Code</Button>
           </Link>
           {user ? (
-            <button
-              type="button"
-              onClick={handleSignOut}
-              className="mt-3 block w-full rounded-md px-3 py-3 text-left text-base font-medium text-text hover:bg-surface"
-            >
-              Sign out
-            </button>
+            <>
+              <div className="mt-4 flex items-center gap-3 rounded-xl border border-border bg-surface px-3 py-3">
+                <span className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent-violet text-sm font-semibold text-white">
+                  {displayName.charAt(0).toUpperCase()}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-medium text-text">{displayName}</div>
+                  <div className="truncate text-xs text-text-muted">{user.email}</div>
+                </div>
+                <Badge tone={isPro ? "violet" : "neutral"}>{isPro ? "Pro" : "Free"}</Badge>
+              </div>
+
+              <div className="mt-2 border-t border-border pt-2">
+                {mobileAccountLinks.map(({ label, href, icon: Icon }) => (
+                  <Link
+                    key={label}
+                    href={href}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center gap-3 rounded-md px-3 py-3 text-base font-medium text-text hover:bg-surface"
+                  >
+                    <Icon className="h-5 w-5 text-text-muted" />
+                    {label}
+                  </Link>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => {
+                    void handleSignOut();
+                  }}
+                  className="flex w-full items-center gap-3 rounded-md px-3 py-3 text-left text-base font-medium text-danger hover:bg-danger/10"
+                >
+                  <LogOutIcon className="h-5 w-5" />
+                  Sign out
+                </button>
+              </div>
+            </>
           ) : (
             <Link
               href="/login"
